@@ -1,0 +1,28 @@
+.space-style {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: center;
+  background-color: rgba(128, 133, 164, 0.33);
+  padding: 10px;
+  min-height: 100vmax;
+  margin-bottom: 4px;
+}
+.h3{
+    font-style: oblique;
+  text-align: center;
+  background-color: white;
+  margin-bottom: 8px;
+
+  
+  border-radius: 4px;
+  
+}
+.Card {
+  width: 310px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+}

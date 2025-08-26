@@ -1,0 +1,33 @@
+.button
+{
+     float: right;
+     width:100px; 
+     height:35px;
+     
+     background-color: red;
+    
+
+     
+}
+.div
+{
+     color: rgb(232, 8, 8);
+   
+}
+.tags
+{
+     color: red;
+}
+
+/* Seçili radio kırmızı, yazı beyaz */
+.ant-radio-button-wrapper-checked {
+  background-color: red !important;
+  color: white !important;
+  border-color: red !important;
+}
+/* Hover durumunu değiştirmek istersen */
+.ant-radio-button-wrapper:hover {
+  background-color: rgb(213, 19, 51) !important;
+  color: white !important;
+  
+}

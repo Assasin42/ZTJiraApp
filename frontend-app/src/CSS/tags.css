@@ -1,0 +1,12 @@
+/* MyTag.css */
+.my-tag {
+  color: red;
+  border-color: red;
+  background: transparent;
+}
+
+.my-tag.ant-tag-checkable-checked {
+  color: white !important;
+  background-color: red !important;
+  border-color: red !important;
+}
