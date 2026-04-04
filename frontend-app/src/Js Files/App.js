@@ -1,5 +1,5 @@
 import React from 'react';
-import Kartlar from '../Cards';
+import Kartlar from '../Card/Cards';
 import MyMenu from '../MyMenu';
 import {DndContext} from '@dnd-kit/core';
 import { message } from "antd";

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Row, Modal, Form, Input, Radio } from "antd";
 import { closestCenter, DndContext, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { IKart, StatusId } from "./MyMenu";
-import { fetchTodo, fetchInProcess, fetchInreviev, fetchDone, updateKart, fixKart, deleteKart } from "./Api";
-import MyTag from "./Form/tags";
-import DraggableCard from "./Dnd-kit/DraggableCard";
-import DroppableColumn from "./Dnd-kit/DroppableColumn";
-import "./CSS/Cards.css";
+import { IKart, StatusId } from "../MyMenu";
+import { fetchTodo, fetchInProcess, fetchInreviev, fetchDone, updateKart, fixKart, deleteKart } from "../Api";
+import MyTag from "../Form/tags";
+import DraggableCard from "../Dnd-kit/DraggableCard";
+import DroppableColumn from "../Dnd-kit/DroppableColumn";
+import "../CSS/Cards.css";
 
 const Kartlar: React.FC = () => {
   const [form] = Form.useForm();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Layout, Menu, Modal, theme } from 'antd';
 import MyMiniForm from './Form/MyMiniform';
-import Kartlar from './Cards';
+import Kartlar from './Card/Cards';
 import { fetchDone, fetchInProcess, fetchInreviev, fetchKartlar, fetchProjeler, fetchTodo, veriGonder } from './Api';
 
 import MyList from './Project/Projects_section';

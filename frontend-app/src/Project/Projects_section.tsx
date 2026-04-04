@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal, Space, Table, Tag } from 'antd';
 import type { TableProps } from 'antd';
 import { IKart } from '../MyMenu';
-import { fetchProjeler, updateproject } from '../Api';
+import { deleteKart, fetchProjeler, updateproject } from '../Api';
 import MyTag from '../Form/tags';
 
 const MyList: React.FC<any> = () => {
@@ -21,10 +21,17 @@ const MyList: React.FC<any> = () => {
   }, []);
 
   // ✅ Kart silme
-  const handleDelete = (id: number) => {
-    const newData = projeler.filter((item) => item._id !== id);
-    setProjeler(newData);
-  };
+const handleDelete = async (id: number) => {
+  try {
+    await deleteKart(id);
+
+    // 🔥 sadece ekrandan kaldır
+    setProjeler(prev => prev.filter(p => p._id !== id));
+
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   // ✅ Kart düzenleme (modalı açar ve formu doldurur)
   const handleEdit = (record: IKart) => {
