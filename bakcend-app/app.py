@@ -1,3 +1,4 @@
+import bcrypt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient
@@ -13,7 +14,7 @@ uri = icerik
 client = MongoClient(uri)
 db = client["form_veritabani"]  # ← eksik olan satır bu!
 collection = db["formlar"]
-
+users = db["users"]
 @app.route("/")
 def home():
     return "API çalışıyor! 👋"
@@ -131,6 +132,43 @@ def update_project(project_id):
         return jsonify({"error": "Kart bulunamadı"}), 404
     return jsonify({"mesaj": "Kart güncellendi"}), 200
 
+@app.route("/api/login", methods=["POST"])
+def login():
+    data = request.json
 
+    users = db["users"]
+
+    user = users.find_one({
+        "email": data["email"],
+        "password": data["password"]
+    })
+
+    if user:
+        return jsonify({
+            "message": "success",
+            "token": str(user["_id"])  # basit token (şimdilik)
+        })
+    else:
+        return jsonify({"message": "fail"}), 401
+    
+@app.route("/api/register", methods=["POST"])
+def register():
+    data = request.json
+
+    # aynı email var mı kontrol
+    existing_user = users.find_one({"email": data["email"]})
+
+    if existing_user:
+        return jsonify({"message": "user_exists"}), 400
+
+    new_user = {
+        "email": data["email"],
+        "password": data["password"]
+    }
+
+    users.insert_one(new_user)
+
+    return jsonify({"message": "success"}), 201
+    
 if __name__ == '__main__':
     app.run(port=3001, debug=True)

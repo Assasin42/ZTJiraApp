@@ -34,7 +34,10 @@ export const fetchProjeler = async () => {
   const res = await axios.get("http://localhost:3001/api/projects");
   return res.data;
 };
-
+export const login = async (email: string, password: string) => {
+  const res = await axios.post("http://localhost:3001/api/login", { email, password });
+  return res.data;
+};
 // Kart güncelle
 export const updateKart = async (id: number, data: Partial<IKart>) => {
   const response = await axios.put(`http://localhost:3001/api/card/${id}`, data);
@@ -53,7 +56,13 @@ export const updateproject = async (id: number, data: Partial<IKart>) => {
   const response = await axios.put(`http://localhost:3001/api/projects/${id}`, data);
   return response.data;
 };
-
+export const register = async (email: string, password: string) => {
+  const res = await axios.post("http://localhost:3001/api/register", {
+    email,
+    password
+  });
+  return res.data;
+};
 // Yeni kart gönder
 export const veriGonder = async (formData: any) => {
   const postData = { ...formData, status: StatusId.Open };

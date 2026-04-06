@@ -3,6 +3,7 @@ import { Button, Layout, Menu, Modal, theme } from 'antd';
 import MyMiniForm from './Form/MyMiniform';
 import Kartlar from './Card/Cards';
 import { fetchDone, fetchInProcess, fetchInreviev, fetchKartlar, fetchProjeler, fetchTodo, veriGonder } from './Api';
+import { useNavigate } from "react-router-dom";
 
 import MyList from './Project/Projects_section';
 import Backlog from './Backlog/Backlog';
@@ -44,7 +45,15 @@ const MyMenu: React.FC = () => {
 
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+const navigate = useNavigate();
 
+useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    navigate("/login");
+  }
+}, []);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -77,6 +86,7 @@ const MyMenu: React.FC = () => {
   return (
     <Layout>
       <Header style={{ display: 'flex', alignItems: 'center', backgroundColor: '#fff' }}>
+       
         <img
           src="/logo.png"
           alt="Logo"
@@ -92,7 +102,17 @@ const MyMenu: React.FC = () => {
         />
 
         <Button onClick={handleOpenModal} type='primary' style={{ marginLeft: 10, backgroundColor: 'red' }}>Create</Button>
-      </Header>
+       <Button
+  danger
+  onClick={() => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }}
+  style={{ marginLeft: "auto" }}
+>
+  Çıkış
+</Button>
+</Header>
       <Layout>
         {/* <Sider width={65} style={{ background: '#fff' }} >
           <Menu

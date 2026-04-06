@@ -37,6 +37,15 @@ const handleMove = async (record: IKart) => {
       status === StatusId.Open ? StatusId.Todo : StatusId.Open;
 
     await fixKart(record._id, { status: newStatus });
+if (status === StatusId.Open) {
+  messageApi.open({
+      type: "success",
+      content: "Görev kabul edildi",
+    });
+  } else {messageApi.open({
+      type: "success",
+      content: "Görev beklemeye alındı",
+    });}
 
     // 🔥 bulunduğu listeden kaldır
     setMissions(prev => prev.filter(m => m._id !== record._id));
@@ -180,10 +189,27 @@ const handleDelete = async (id: number) => {
           form={form}
           layout="vertical"
           onFinish={async (values) => {
-          if (editingMission) {
-    await updateKart(editingMission._id, values);
-    reloadData(); // 🔥 kritik
+  if (editingMission) {
+    try {
+      await updateKart(editingMission._id, values);
+
+      messageApi.open({
+        type: "success",
+        content: "Kart başarıyla güncellendi",
+        duration: 1.5,
+      });
+
+      reloadData();
+    } catch (error) {
+      console.error(error);
+
+      messageApi.open({
+        type: "error",
+        content: "Güncelleme başarısız",
+      });
+    }
   }
+
   setIsModalOpen(false);
 }}
         >
