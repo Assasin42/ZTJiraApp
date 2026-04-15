@@ -13,9 +13,12 @@ type ListelerProps = {
 };
 
 
-const role = localStorage.getItem("role");
 const Mytask: React.FC<ListelerProps> = ({status}) => {
+const [role, setRole] = useState<string | null>(null);
 
+useEffect(() => {
+  setRole(localStorage.getItem("role"));
+}, []);
  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5); // her sayfada kaç kayıt gözüksün?
 const [missions, setMissions] = useState<IKart[]>([]);
@@ -148,14 +151,11 @@ const handleDelete = async (id: number) => {
   title: 'Action',
   key: 'action',
   render: (_, record: IKart) => (
-    <Space size="middle">
-      {role === "admin" && (
-        <>
-      
+    <Space size="middle">   
       <a onClick={() => handleEdit(record)}>Güncelle</a>
       <a onClick={() => handleDelete(record._id)}>Delete</a>
-   
-      {/* 🔥 YENİ MOVE BUTONU */}
+   {role === "admin" && (
+        <>
       <a onClick={() => handleMove(record)}>
         {status === StatusId.Open ? "Görevi Kabul Et" : "Görevi Beklemeye Al"}
       </a>   </>
