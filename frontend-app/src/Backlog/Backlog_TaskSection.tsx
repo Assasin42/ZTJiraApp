@@ -13,7 +13,7 @@ type ListelerProps = {
 };
 
 
-
+const role = localStorage.getItem("role");
 const Mytask: React.FC<ListelerProps> = ({status}) => {
 
  const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +37,7 @@ const handleMove = async (record: IKart) => {
       status === StatusId.Open ? StatusId.Todo : StatusId.Open;
 
     await fixKart(record._id, { status: newStatus });
-if (status === StatusId.Open) {
+if (status === StatusId.Open && role === "admin") {
   messageApi.open({
       type: "success",
       content: "Görev kabul edildi",
@@ -149,13 +149,17 @@ const handleDelete = async (id: number) => {
   key: 'action',
   render: (_, record: IKart) => (
     <Space size="middle">
+      {role === "admin" && (
+        <>
+      
       <a onClick={() => handleEdit(record)}>Güncelle</a>
       <a onClick={() => handleDelete(record._id)}>Delete</a>
-
+   
       {/* 🔥 YENİ MOVE BUTONU */}
       <a onClick={() => handleMove(record)}>
         {status === StatusId.Open ? "Görevi Kabul Et" : "Görevi Beklemeye Al"}
-      </a>
+      </a>   </>
+)}
     </Space>
   ),
 }

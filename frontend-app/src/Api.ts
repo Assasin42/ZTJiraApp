@@ -35,7 +35,7 @@ export const fetchProjeler = async () => {
   return res.data;
 };
 export const login = async (email: string, password: string) => {
-  const res = await axios.post("http://localhost:3001/api/login", { email, password });
+  const res = await axios.post("http://localhost:3001/api/", { email, password });
   return res.data;
 };
 // Kart güncelle

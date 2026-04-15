@@ -13,7 +13,7 @@ const Register: React.FC = () => {
 
       if (res.message === "success") {
         message.success("Kayıt başarılı!");
-        navigate("/login");
+        navigate("/");
       }
     } catch (err: any) {
       if (err.response?.data?.message === "user_exists") {
@@ -36,10 +36,10 @@ const Register: React.FC = () => {
             <Input.Password placeholder="Şifre" />
           </Form.Item>
 
-          <Button style={{ backgroundColor: "#cb2828" }} type="primary" htmlType="submit" onClick={() => navigate("/login")} block>
+          <Button style={{ backgroundColor: "#cb2828" }} type="primary" htmlType="submit" onClick={() => navigate("/")} block>
             Kayıt Ol
           </Button>
-          <Button style={{ color: "red" }} type="link" onClick={() => navigate("/login")}>
+          <Button style={{ color: "red" }} type="link" onClick={() => navigate("/")}>
                       Zaten hesabın var mı? Giriş yap
           </Button>
         </Form>

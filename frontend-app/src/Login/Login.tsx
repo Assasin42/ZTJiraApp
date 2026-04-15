@@ -7,7 +7,11 @@ const  newLocal = <img src="/logo.png" alt="Logo" style={{ width: '150px', heigh
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
+const role = localStorage.getItem("role");
 
+if (role === "admin") {
+  console.log("Admin paneli aç");
+}
   const onFinish = async (values: any) => {
     try {
       const res = await login(values.email, values.password);
@@ -15,7 +19,7 @@ const Login: React.FC = () => {
       if (res.message === "success") {
         // 🔥 TOKEN KAYDET
         localStorage.setItem("token", res.token);
-
+       localStorage.setItem("role", res.role);
         messageApi.success("Giriş başarılı!");
 
         setTimeout(() => {

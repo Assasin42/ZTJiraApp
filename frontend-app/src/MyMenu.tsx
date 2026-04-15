@@ -51,7 +51,7 @@ useEffect(() => {
   const token = localStorage.getItem("token");
 
   if (!token) {
-    navigate("/login");
+    navigate("/");
   }
 }, []);
 
@@ -106,7 +106,7 @@ useEffect(() => {
   danger
   onClick={() => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/");
   }}
   style={{ marginLeft: "auto" }}
 >

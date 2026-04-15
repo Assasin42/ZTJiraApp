@@ -1,3 +1,5 @@
+import token
+
 import bcrypt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
@@ -132,24 +134,28 @@ def update_project(project_id):
         return jsonify({"error": "Kart bulunamadı"}), 404
     return jsonify({"mesaj": "Kart güncellendi"}), 200
 
-@app.route("/api/login", methods=["POST"])
+@app.route("/api/", methods=["POST"])
 def login():
     data = request.json
 
-    users = db["users"]
-
     user = users.find_one({
-        "email": data["email"],
-        "password": data["password"]
+        "email": data["email"].strip()
     })
 
-    if user:
+    if not user:
+        return jsonify({"message": "user_not_found"}), 404
+
+    if bcrypt.checkpw(
+        data["password"].encode("utf-8"),
+        user["password"].encode("utf-8")
+    ):
         return jsonify({
             "message": "success",
-            "token": str(user["_id"])  # basit token (şimdilik)
+            "token": str(user["_id"]),
+            "role": user.get("role", "user")
         })
-    else:
-        return jsonify({"message": "fail"}), 401
+
+    return jsonify({"message": "wrong_password"}), 401
     
 @app.route("/api/register", methods=["POST"])
 def register():
@@ -161,9 +167,15 @@ def register():
     if existing_user:
         return jsonify({"message": "user_exists"}), 400
 
+    hashed_password = bcrypt.hashpw(
+        data["password"].encode("utf-8"),
+        bcrypt.gensalt()
+    )
+
     new_user = {
         "email": data["email"],
-        "password": data["password"]
+        "password": hashed_password.decode("utf-8"),
+        "role": data.get("role", "user")  # 🔥 default user
     }
 
     users.insert_one(new_user)
